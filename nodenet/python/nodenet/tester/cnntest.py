@@ -1,22 +1,8 @@
 # nodenet/tester/cnntest.py
 # Description:
-# "cnn.py" provide convolutional neuralnet esting.
+# "cnn.py" provide convolutional neuralnet testing.
 # Copyright 2018 NOOXY. All Rights Reserved.
 
-import numpy as np
-import nodenet.neuralnets as nn
-import nodenet.layers as layers
-import nodenet.functions as f
-import nodenet.trainingsessions as sessions
-import nodenet.interface.graph as graph
-import nodenet.utilities as util
-import nodenet.interface.console as console
-import nodenet.io as nnio
-import nodenet.variables as var
-
-console.logo()
-
-# Graphing test 1
 import nodenet.variables as var
 import nodenet.utilities as util
 import nodenet.layers as layers

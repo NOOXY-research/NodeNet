@@ -1,6 +1,6 @@
 # nodenet/trainingsessions/batch.py
 # Description:
-# "container.py" provide container to contain nodelayers, netlayers, and others in able to construct neuralnet.
+# "batch.py" provide batch training session.
 # Copyright 2018 NOOXY. All Rights Reserved.
 
 from nodenet.imports.commons import *
@@ -57,6 +57,9 @@ class MiniBatchSession(object):
 
     setup = __init__
 
+    def dumpLog(self, epochs, batch_train_loss, valid_loss):
+        console.log('training', 'epochs: '+str(epochs)+', batch_train_loss: '+str(batch_train_loss)+', valid_loss: '+str(valid_loss))
+
     def startTraining(self):
         iterations_sum = 0
         loss_record_train = [] # each epoch
@@ -84,12 +87,10 @@ class MiniBatchSession(object):
                 loss_record_train.append(train_loss)
                 loss_record_valid.append(valid_loss)
                 if (iterations_sum/self.iterations_each_epoch)%self.verbose_interval == 0 and self.verbose:
-                    console.log('training', 'epochs: '+str(iterations_sum/self.iterations_each_epoch)+', train_batch_loss: '+str(loss_record_train[-1])+', valid_loss: '+str(loss_record_valid[-1]))
-                    # console.log('training', 'epochs: '+str(iterations_sum/self.iterations_each_epoch)+', valid_loss: '+str(loss_record_valid[-1]))
+                    self.dumpLog(iterations_sum/self.iterations_each_epoch, loss_record_train[-1], loss_record_valid[-1])
                 # Do backup
                 if (iterations_sum/self.iterations_each_epoch)%self.backup_intervel == 0:
                     nnio.save_neuralnet(self.neuralnet, self.backup_path+self.neuralnet.name)
-
 
             self.neuralnet.forward(this_batch_input, self.forward_config)
             self.neuralnet.backward(this_batch_output, self.loss_function, self.backward_config)
@@ -99,7 +100,3 @@ class MiniBatchSession(object):
             latest_loss = 999
 
         return loss_record_train, loss_record_valid
-
-
-class WholeBatchSession(object):
-    pass

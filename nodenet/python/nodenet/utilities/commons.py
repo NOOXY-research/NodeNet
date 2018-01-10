@@ -4,21 +4,34 @@
 # Copyright 2018 NOOXY. All Rights Reserved.
 
 from nodenet.imports.commons import *
+import numpy as np2
+# np2 for cupy compabable
 
 def cut_dataset_by_ratio_ramdom(datasets, cut_ratio = 0.1):
     dimension = len(datasets[0].shape)
     valid_data_size = int(len(datasets[0])*cut_ratio)
-    input_data = datasets[0]
-    output_data = datasets[1]
-    input_data_valid = np.empty([0]+list(input_data.shape[1:len(input_data.shape)]))
-    output_data_valid = np.empty([0]+list(input_data.shape[1:len(input_data.shape)]))
+    input_data = np2.array(datasets[0].tolist())
+    output_data = np2.array(datasets[1].tolist())
+    input_data_valid = np2.empty([0]+list(input_data.shape[1:len(input_data.shape)]))
+    output_data_valid = np2.empty([0]+list(output_data.shape[1:len(output_data.shape)]))
     for x in range(valid_data_size):
-        index = np.random.randint(len(input_data))
-        input_data_valid = np.concatenate((input_data_valid, [input_data[index]]))
-        output_data_valid = np.concatenate((output_data_valid, [output_data[index]]))
-        input_data = np.delete(input_data, index, axis=0)
-        output_data = np.delete(output_data, index, axis=0)
+        index = np2.random.randint(len(input_data))
+        input_data_valid = np2.concatenate((input_data_valid, np2.array(([input_data[index].tolist()]))), axis=0)
+        output_data_valid = np2.concatenate((output_data_valid, np2.array(([output_data[index].tolist()]))), axis=0)
+        input_data = np2.delete(input_data, index, axis=0)
+        output_data = np2.delete(output_data, index, axis=0)
+    input_data = np.array(input_data.tolist())
+    output_data = np.array(output_data.tolist())
+    input_data_valid = np.array(input_data_valid.tolist())
+    output_data_valid = np.array(output_data_valid.tolist())
     return [input_data, output_data, input_data_valid, output_data_valid]
+
+def shuffle_datasets(datasets):
+    a = np2.array(datasets[0].tolist())
+    b = np2.array(datasets[1].tolist())
+    assert len(a) == len(b)
+    order = np2.random.permutation(len(a))
+    return [np.array(a[order].tolist()), np.array(b[order].tolist())]
 
 def get_mini_batch_ramdom(datasets, mini_batch_size):
     input_data = datasets[0]

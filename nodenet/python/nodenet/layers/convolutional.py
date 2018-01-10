@@ -98,7 +98,7 @@ class Conv2D(Layer):
     def conv_sensitivty_map(self, expand_sens_map):
         kernel = np.swapaxes(np.rot90(self.filter, 2, axes=(-2,-1)), 0, 1)
         if self.padding_size > 0:
-            expand_sens_map = expand_sens_map[:, :, self.padding_size:-self.padding_size, self.padding_size:-self.padding_size]
+            expand_sens_map = expand_sens_map[:, :, self.padding_size*(self.stride):-self.padding_size*(self.stride), self.padding_size*(self.stride):-self.padding_size*(self.stride)]
         expand_sens_map = padding(expand_sens_map, (self.filter_height-1, self.filter_width-1), 0)
         output_width = self.latest_input_signal.shape[-1]
         output_height = self.latest_input_signal.shape[-2]
