@@ -6,6 +6,7 @@
 from .commons import *
 
 def save_neuralnet(neuralnet, filename):
+    neuralnet.clear_cache()
     return dopickle(neuralnet, filename+'.nodenet')
 
 def load_neuralnet(filename):

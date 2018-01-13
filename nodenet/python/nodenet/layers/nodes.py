@@ -21,8 +21,13 @@ class Nodes1D(Layer):
 
     def __str__(self):
         string = ''
-        string += 'VectorNodes(nodes number: '+str(self.nodes_number)+', activator: '+str(self.activator)+')'
+        string += 'Nodes1D(nodes number: '+str(self.nodes_number)+', activator: '+str(self.activator)+')'
         return string
+
+    def clear_cache(self):
+        self.latest_input_signal = None
+        self.latest_sensitivity_map = None
+        self.latest_dropout_keep_mask = None
 
     def new_dropout(self, dropout_keep):
         if (dropout_keep < 1) and (not self.is_input_layer) and (not self.is_output_layer):
@@ -68,8 +73,13 @@ class Nodes2D(Layer):
 
         def __str__(self):
             string = ''
-            string += 'VectorNodes(nodes : '+str(self.nodes_width)+'x'+str(self.nodes_height)+', activator: '+str(self.activator)+')'
+            string += 'Nodes2D(nodes : '+str(self.nodes_width)+'x'+str(self.nodes_height)+', activator: '+str(self.activator)+')'
             return string
+
+        def clear_cache(self):
+            self.latest_input_signal = None
+            self.latest_sensitivity_map = None
+            self.latest_dropout_keep_mask = None
 
         def new_dropout(self, dropout_keep):
             if (dropout_keep < 1) and (not self.is_input_layer) and (not self.is_output_layer):

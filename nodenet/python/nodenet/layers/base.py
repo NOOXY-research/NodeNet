@@ -19,6 +19,8 @@ class Layer(object):
     __repr__ = __str__
 
     setup = __init__
+    def clear_cache(self):
+        pass
 
     def new_dropout(self, dropout_keep):
         pass

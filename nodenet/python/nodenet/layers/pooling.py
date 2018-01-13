@@ -32,6 +32,10 @@ class MaxPool2D(Layer):
         string += 'MaxPooling()'
         return string
 
+    def clear_cache(self):
+        self.latest_sensitivity_map_maxidx = None
+        self.latest_input_signal_shape = None
+
     def pooling_forward(self, input_data):
         stride = self.stride
         kernel_width = self.filter_width

@@ -27,6 +27,10 @@ class SimpleContainer(object):
 
     setup = __init__
 
+    def clear_cache(self):
+        for layer in self.layers:
+            layer.clear_cache()
+
     def new_dropout(self, dropout_keep):
         for x in range(len(self.layers)-2):
             self.layers[x+1].new_dropout(dropout_keep)

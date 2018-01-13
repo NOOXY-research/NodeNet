@@ -76,6 +76,12 @@ class Conv2D(Layer):
         string += 'ConvLayer(filter number: '+str(self.filter_number)+'('+str(self.filter_width)+'x'+str(self.filter_height)+') , stride: '+str(self.stride)+')'
         return string
 
+    def clear_cache(self):
+        self.filter_learning_cache = None
+        self.bias_learning_cache = None
+        self.latest_input_signal = None
+        self.latest_sensitivity_map = None
+
     def conv_forward(self, input_data, stride, bias=None):
         kernel = self.filter
         output_width = calc_conv_output_size(input_data.shape[-1], kernel.shape[-1], stride)

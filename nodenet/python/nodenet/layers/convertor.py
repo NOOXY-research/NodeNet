@@ -15,6 +15,9 @@ class TensortoVector(Layer):
         string += 'TensortoVector'
         return string
 
+    def clear_cache(self):
+        self.latest_input_shape = None
+
     def forward(self, input_signal, forward_config, *args):
         trace = forward_config['trace']
         if trace:

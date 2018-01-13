@@ -81,6 +81,9 @@ class MiniBatchSession(object):
 
             # Do record of loss
             if iterations_sum%self.iterations_each_epoch == 0:
+                # Do backup
+                if (iterations_sum/self.iterations_each_epoch)%self.backup_intervel == 0:
+                    nnio.save_neuralnet(self.neuralnet, self.backup_path+self.neuralnet.name)
                 self.neuralnet.new_dropout(self.forward_config['dropout_keep'])
                 train_loss = np.mean(self.loss_function(self.neuralnet.forward(this_batch_input, var.forward_config), this_batch_output))
                 valid_loss = np.mean(self.loss_function(self.neuralnet.forward(self.input_data_valid), self.output_data_valid))
@@ -88,9 +91,6 @@ class MiniBatchSession(object):
                 loss_record_valid.append(valid_loss)
                 if (iterations_sum/self.iterations_each_epoch)%self.verbose_interval == 0 and self.verbose:
                     self.dumpLog(iterations_sum/self.iterations_each_epoch, loss_record_train[-1], loss_record_valid[-1])
-                # Do backup
-                if (iterations_sum/self.iterations_each_epoch)%self.backup_intervel == 0:
-                    nnio.save_neuralnet(self.neuralnet, self.backup_path+self.neuralnet.name)
 
             self.neuralnet.forward(this_batch_input, self.forward_config)
             self.neuralnet.backward(this_batch_output, self.loss_function, self.backward_config)

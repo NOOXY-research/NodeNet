@@ -32,6 +32,12 @@ class FullyConnected1D(Layer):
         string += 'FullyConnectedNet1D('+str(self.front_nodes_size)+'x'+str(self.back_nodes_size)+')'
         return string
 
+    def clear_cache(self):
+        self.weights_learning_cache = None
+        self.bias_learning_cache = None
+        self.latest_input_signal = None
+        self.latest_sensitivity_map = None
+
     def forward(self, input_signal, forward_config, *args):
         # print(input_signal.shape)
         trace = forward_config['trace']
