@@ -8,6 +8,6 @@ nodenet = {
     'Yves Chen',
     ],
     'Company' : 'NOOXY inc.',
-    'Copyright' : 'Copyright(c)2018-2017 NOOXY inc. Taiwan.',
-    'Website' : 'http://www.nooxy.tk',
+    'Copyright' : 'Copyright(c)2017-2019 NOOXY inc. Taiwan.',
+    'Website' : 'http://nooxy.org',
 }
