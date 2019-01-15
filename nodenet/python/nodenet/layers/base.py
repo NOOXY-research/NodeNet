@@ -19,6 +19,10 @@ class Layer(object):
     __repr__ = __str__
 
     setup = __init__
+    
+    def convert(self):
+        pass
+    
     def clear_cache(self):
         pass
 

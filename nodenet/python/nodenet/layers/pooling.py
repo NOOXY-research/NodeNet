@@ -31,7 +31,10 @@ class MaxPool2D(Layer):
         string = ''
         string += 'MaxPooling()'
         return string
-
+    
+    def convert(self):
+        self.clear_cache()
+    
     def clear_cache(self):
         self.latest_sensitivity_map_maxidx = None
         self.latest_input_signal_shape = None

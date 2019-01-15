@@ -28,8 +28,13 @@ class SimpleContainer(object):
     setup = __init__
 
     def clear_cache(self):
+        self.latest_output = None
         for layer in self.layers:
             layer.clear_cache()
+
+    def convert(self):
+        for layer in self.layers:
+            layer.convert()
 
     def new_dropout(self, dropout_keep):
         for x in range(len(self.layers)-2):

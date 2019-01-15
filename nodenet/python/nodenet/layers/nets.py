@@ -31,6 +31,14 @@ class FullyConnected1D(Layer):
         string = ''
         string += 'FullyConnectedNet1D('+str(self.front_nodes_size)+'x'+str(self.back_nodes_size)+')'
         return string
+    
+    def convert(self):
+        self.weights = np2.array(self.weights.tolist())
+        self.weights_grad = np2.array(self.weights_grad.tolist())
+        if self.has_bias == True:
+            self.bias = np2.array(self.bias.tolist())
+            self.bias_grad = np2.array(self.bias_grad.tolist())
+        self.clear_cache()
 
     def clear_cache(self):
         self.weights_learning_cache = None
@@ -59,7 +67,7 @@ class FullyConnected1D(Layer):
             self.bias_grad = np.dot(np.ones((1, input_sensitivity_map.shape[0])), input_sensitivity_map)
 
     def update_weight_and_bias(self, learning_algorithm, learning_configuration):
-        weight_update, self.weight_learning_cache = learning_algorithm(self.weights_grad, learning_configuration, self.weights_learning_cache)
+        weight_update, self.weights_learning_cache = learning_algorithm(self.weights_grad, learning_configuration, self.weights_learning_cache)
         self.weights += weight_update
         if self.has_bias == True:
             bias_update, self.bias_learning_cache = learning_algorithm(self.bias_grad, learning_configuration, self.bias_learning_cache)

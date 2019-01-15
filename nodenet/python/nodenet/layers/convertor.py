@@ -14,7 +14,10 @@ class TensortoVector(Layer):
         string = ''
         string += 'TensortoVector'
         return string
-
+    
+    def convert(self):
+        self.clear_cache()
+    
     def clear_cache(self):
         self.latest_input_shape = None
 

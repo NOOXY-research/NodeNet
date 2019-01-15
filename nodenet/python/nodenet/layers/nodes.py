@@ -6,7 +6,7 @@
 from nodenet.imports.commons import *
 from .base import *
 import nodenet.functions as func
-import numpy as np2
+import numpy
 
 # Vector Nodes input: 2D vector, output: 2D vector
 class Nodes1D(Layer):
@@ -23,7 +23,10 @@ class Nodes1D(Layer):
         string = ''
         string += 'Nodes1D(nodes number: '+str(self.nodes_number)+', activator: '+str(self.activator)+')'
         return string
-
+    
+    def convert(self):
+        self.clear_cache()
+    
     def clear_cache(self):
         self.latest_input_signal = None
         self.latest_sensitivity_map = None
@@ -31,7 +34,7 @@ class Nodes1D(Layer):
 
     def new_dropout(self, dropout_keep):
         if (dropout_keep < 1) and (not self.is_input_layer) and (not self.is_output_layer):
-            self.latest_dropout_keep_mask = np.array(np2.random.binomial(np2.ones(shape=(1, self.nodes_number), dtype=np2.int64), dropout_keep).tolist())
+            self.latest_dropout_keep_mask = np.array(numpy.random.binomial(numpy.ones(shape=(1, self.nodes_number), dtype=numpy.int64), dropout_keep).tolist())
 
     def forward(self, input_signal, forward_config, *args):
         trace = forward_config['trace']
@@ -75,6 +78,9 @@ class Nodes2D(Layer):
             string = ''
             string += 'Nodes2D(nodes : '+str(self.nodes_width)+'x'+str(self.nodes_height)+', activator: '+str(self.activator)+')'
             return string
+        
+        def convert(self):
+            self.clear_cache()
 
         def clear_cache(self):
             self.latest_input_signal = None
@@ -83,7 +89,7 @@ class Nodes2D(Layer):
 
         def new_dropout(self, dropout_keep):
             if (dropout_keep < 1) and (not self.is_input_layer) and (not self.is_output_layer):
-                self.latest_dropout_keep_mask = np.array(np2.random.binomial(np2.ones(shape=(1, self.nodes_depth, self.nodes_height, self.nodes_width), dtype=np2.int64), dropout_keep).tolist())
+                self.latest_dropout_keep_mask = np.array(numpy.random.binomial(numpy.ones(shape=(1, self.nodes_depth, self.nodes_height, self.nodes_width), dtype=numpy.int64), dropout_keep).tolist())
 
         def forward(self, input_signal, forward_config, *args):
             # print(input_signal.shape)
