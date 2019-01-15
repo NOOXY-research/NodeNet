@@ -20,7 +20,7 @@ def expand_map(input_data, stride):
     for i in range(input_data_width):
             for j in range(input_data_height):
                 i_pos = i*stride
-                j_pos = j*stride/Volumes/DATA/soft_dev/NodeNet/nodenet/python/nodenet/io/commons.py
+                j_pos = j*stride
                 expanded_data[:, :, i_pos, j_pos] = input_data[:, :, i, j]
     return expanded_data
 
@@ -75,7 +75,7 @@ class Conv2D(Layer):
         string = ''
         string += 'ConvLayer(filter number: '+str(self.filter_number)+'('+str(self.filter_width)+'x'+str(self.filter_height)+') , stride: '+str(self.stride)+')'
         return string
-    
+
     def convert(self):
         self.filter = np2.array(self.filter.tolist())
         self.filter_grad = np2.array(self.filter_grad.tolist())
